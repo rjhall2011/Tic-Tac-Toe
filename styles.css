@@ -1,3 +1,4 @@
+
 #board{
     text-align: center;
   margin: 0 auto;
@@ -79,4 +80,15 @@ button:hover{
 #block_5,
 #block_8{
     border-right: none;
+}
+#restart {
+    padding: 10px 20px;
+    background-color:#eee;
+    border:4px solid crimson;
+    border-radius: 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
 }
