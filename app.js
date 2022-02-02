@@ -1,6 +1,6 @@
 let block = document.querySelectorAll('.block');
 let text = document.querySelector('#heading')
-let strategy = document.querySelector('#strategy')
+let strategy = document.querySelector('#winner')
 let restartBtn = document.querySelector('#restart')
 
 const spaces = [];
@@ -15,12 +15,18 @@ for (let i = 0; i < block.length; i++) {
 }
 
 function cellClicked() {
-    event.target.textContent = tick_x
+  event.target.textContent = currentPlayer
+  playerWon()
+  if ( currentPlayer == tick_x){
+    currentPlayer = tick_circle
+  } else{
+    currentPlayer = tick_x
+  }
 }
 
 
 const board = () => {
-    boxes.forEach(box, i => {
+    block.forEach(block, i => {
         let styleString ='';
         if (i < 3){
             styleString += 'border-bottom: 3px solid var(--text);';
@@ -34,11 +40,11 @@ const board = () => {
         if (i > 5) {
             styleString += 'border-top: 3px solid var(--text);';
         }
-        box.style = styleString
-        box.addEventListener('click', boxClicked)
+        block.style = styleString
+        block.addEventListener('click', blockClicked)
     });
 }
-const boxClicked = (e) => {
+const blockClicked = (e) => {
   const id = e.target.id;
   console.log(e);
   if (!spaces[id]) {
@@ -58,41 +64,44 @@ const boxClicked = (e) => {
     currentPlayer = currentPlayer === tick_x ? tick_circle : tick_x;
   }
 };
-function playerWon() {
-    if (spaces[0] === currentPlayer) {
-        if (spaces[1] === currentPlayer && spaces[2] === currentPlayer) {
+const playerWon = () => {
+  console.log(block[0])
+  console.log(currentPlayer)
+    if (block[0].innerHTML === currentPlayer) {
+      console.log("test")
+        if (block[1].innerHTML === currentPlayer && block[2].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins up to top`;
             return true;
         }
-        if (spaces[3] === currentPlayer && spaces[6] === currentPlayer) {
+        if (block[3].innerHTML === currentPlayer && block[6].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the left`;
             return true;
         }
-        if (spaces[4] === currentPlayer && spaces[8] === currentPlayer) {
+        if (block[4].innerHTML === currentPlayer && block[8].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins diagonally`;
             return true;
         }
     }
-    if (spaces[8] === currentPlayer) {
-        if (spaces[2] === currentPlayer && spaces[5] === currentPlayer) {
+    if (block[8].innerHTML === currentPlayer) {
+        if (block[2].innerHTML === currentPlayer && block[5].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the right`;
             return true;
         }
-        if (spaces[6] === currentPlayer && spaces[7] === currentPlayer) {
+        if (block[6].innerHTML === currentPlayer && block[7].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the bottom`;
             return true;
         }
     }
-    if (spaces[4] === currentPlayer) {
-        if (spaces[1] === currentPlayer && spaces[7] === currentPlayer) {
+    if (block[4].innerHTML === currentPlayer) {
+        if (block[1].innerHTML === currentPlayer && block[7].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins vertically on middle`;
             return true;
         }
-        if (spaces[3] === currentPlayer && spaces[5] === currentPlayer) {
+        if (block[3].innerHTML === currentPlayer && block[5].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins horizontally on the middle`;
             return true;
         }
-        if (spaces[2] === currentPlayer && spaces[6] === currentPlayer) {
+        if (block[2].innerHTML === currentPlayer && block[6].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins diagonally`;
             return true;
         }
@@ -110,15 +119,43 @@ const playerDraw = () => {
   }
 };
 
-const restart = () => {
+function restart() {
   setTimeout(() => {
     spaces.forEach((space, i) => {
       spaces[i] = null;
     });
-    boxes.forEach((box) => {
-      box.innerText = '';
+    block.forEach((block) => {
+      block.innerText = '';
     });
-    text.innerText = `Play`;
-    strategy.innerText = ``;
-  }, 1000);
-};
+
+    const playerDraw = () => {
+      let draw = 0;
+      spaces.forEach((space, i) => {
+        if (spaces[i] !== null)
+          draw++;
+      });
+      if (draw === 9) {
+        text.innerText = `Draw`;
+        restart();
+      }
+    };
+
+    const restart = () => {
+      setTimeout(() => {
+        spaces.forEach((space, i) => {
+          spaces[i] = null;
+        });
+        block.forEach((block) => {
+          block.innerText = '';
+        });
+        text.innerText = `Play`;
+        strategy.innerText = ``;
+      }, 1000);
+      currentPlayer = tick_x
+    };
+
+    restartBtn.addEventListener('click', restart);
+    restart();
+    drawBoard();
+  });
+}
