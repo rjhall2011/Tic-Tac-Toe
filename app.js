@@ -2,12 +2,16 @@ let block = document.querySelectorAll('.block');
 let text = document.querySelector('#heading')
 let strategy = document.querySelector('#winner')
 let restartBtn = document.querySelector('#restart')
+let Player1Wins = document.getElementById("player1")
+let Player2Wins = document.getElementById("player2")
+console.log(Player1Wins)
 
 const spaces = [];
-const tick_x = 'x';
-const tick_circle = 'o';
+const tick_x = 'X';
+const tick_circle = 'O';
 let currentPlayer = tick_x
-
+let Xwin =0
+let Owin =0
 
 console.log(block);
 for (let i = 0; i < block.length; i++) {
@@ -54,6 +58,11 @@ const blockClicked = (e) => {
 
     if (playerWon()) {
       text.innerText = `${currentPlayer} has won!`;
+      if (currentPlayer =="X") {
+        console.log("TEST")
+        Xwin++
+        Player1Wins.innerHTML=Xwin
+      }
       restart();
       return;
     }
@@ -68,41 +77,96 @@ const playerWon = () => {
   console.log(block[0])
   console.log(currentPlayer)
     if (block[0].innerHTML === currentPlayer) {
-      console.log("test")
         if (block[1].innerHTML === currentPlayer && block[2].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins up to top`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
         if (block[3].innerHTML === currentPlayer && block[6].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the left`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
         if (block[4].innerHTML === currentPlayer && block[8].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins diagonally`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
     }
     if (block[8].innerHTML === currentPlayer) {
         if (block[2].innerHTML === currentPlayer && block[5].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the right`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
         if (block[6].innerHTML === currentPlayer && block[7].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins on the bottom`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
     }
     if (block[4].innerHTML === currentPlayer) {
         if (block[1].innerHTML === currentPlayer && block[7].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins vertically on middle`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
         if (block[3].innerHTML === currentPlayer && block[5].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins horizontally on the middle`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
         if (block[2].innerHTML === currentPlayer && block[6].innerHTML === currentPlayer) {
             strategy.innerText = `${currentPlayer} wins diagonally`;
+            if(currentPlayer == 'X') {
+              Xwin++
+              Player1Wins.textContent=Xwin
+            } else if (currentPlayer=="O"){
+              Owin++
+              Player2Wins.textContent=Owin
+            }
             return true;
         }
     }
@@ -158,4 +222,16 @@ function restart() {
     restart();
     drawBoard();
   });
+
+// this.score ={
+//   X: = 0,
+//   O: = 0
+
+// };
+// this.marks = {
+//   X: tick_x
+//   O: tick_circle
+// };
+// return this;
+
 }
